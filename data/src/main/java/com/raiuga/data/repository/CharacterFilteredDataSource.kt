@@ -2,7 +2,7 @@ package com.raiuga.data.repository
 
 import com.raiuga.data.mapper.toDomain
 import com.raiuga.data.remote.CharactersRemote
-import com.raiuga.domain.model.CharacterList
+import com.raiuga.domain.model.CharacterInfo
 import com.raiuga.domain.model.Outcome
 import com.raiuga.domain.repository.CharacterFilteredUseCase
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +17,7 @@ internal class CharacterFilteredDataSource(
     override fun fetchCharacter(
         name: String,
         status: String
-    ): Flow<Outcome<CharacterList>> {
+    ): Flow<Outcome<List<CharacterInfo>>> {
         return flow {
             val result = api.filterCharacters(name = name, status = status)
             emit(

@@ -3,7 +3,6 @@ package com.raiuga.data.mapper
 import com.raiuga.data.model.CharacterData
 import com.raiuga.data.model.CharacterResponse
 import com.raiuga.domain.model.CharacterInfo
-import com.raiuga.domain.model.CharacterList
 
 internal fun CharacterData.toDomain() = CharacterInfo(
     id = id ?: -1,
@@ -20,6 +19,4 @@ internal fun CharacterData.toDomain() = CharacterInfo(
     created = created.orEmpty()
 )
 
-internal fun CharacterResponse.toDomain() = CharacterList(
-    list = this.results?.map { it.toDomain() } ?: emptyList()
-)
+internal fun CharacterResponse.toDomain() = this.results?.map { it.toDomain() } ?: emptyList()

@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.raiuga.rickandmorty.screens.HomeScreen
 import com.raiuga.rickandmorty.ui.theme.RickAndMortyTheme
 import com.raiuga.rickandmorty.viewmodel.CharacterViewModel
 import org.koin.androidx.compose.getViewModel
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    Greeting()
                 }
             }
         }
@@ -34,16 +35,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
+fun Greeting() {
     val viewModel = getViewModel<CharacterViewModel>()
-    val characters by viewModel.characterList.collectAsState()
-    Text(text = characters.toString())
+    HomeScreen(viewModel)
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     RickAndMortyTheme {
-        Greeting("Android")
+        Greeting()
     }
 }

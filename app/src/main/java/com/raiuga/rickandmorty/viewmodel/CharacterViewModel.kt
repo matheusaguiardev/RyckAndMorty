@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raiuga.domain.model.CharacterInfo
-import com.raiuga.domain.model.CharacterList
 import com.raiuga.domain.model.Outcome
 import com.raiuga.domain.repository.CharacterFilteredUseCase
 import com.raiuga.domain.repository.CharactersUseCase
@@ -28,32 +27,14 @@ class CharacterViewModel(
         filterCharactersBy(name = "Rick", status = "Alive")
     }
 
-    private val _characterList = MutableStateFlow(CharacterList())
-    val characterList: StateFlow<CharacterList> = _characterList.asStateFlow()
+    private val _characterList = MutableStateFlow(emptyList<CharacterInfo>())
+    val characterList: StateFlow<List<CharacterInfo>> = _characterList.asStateFlow()
 
-    private val _characterFilteredList = MutableStateFlow(CharacterList())
-    val characterFilteredList: StateFlow<CharacterList> = _characterFilteredList.asStateFlow()
+    private val _characterFilteredList = MutableStateFlow(emptyList<CharacterInfo>())
+    val characterFilteredList: StateFlow<List<CharacterInfo>> = _characterFilteredList.asStateFlow()
 
-    private fun getCharacterList() {
-        viewModelScope.launch {
-            with(charactersUseCase) {
-                updateResultOnScreen(fetchSinglePageAndCache()) {
-                    _characterList.value = _characterList.value
-                        .copy(list = it.orEmpty())
-                }
-
-                fetchCharacterList(currentPage)
-                    .flowOn(Dispatchers.IO)
-                    .catch {
-                        Log.e("Kawabunga", "Erro: ${it.message}")
-                    }
-                    .collect { outcome ->
-                        updateResultOnScreen(outcome) {
-
-                        }
-                    }
-            }
-        }
+    fun getNextPage() {
+        getCharacterList(++charactersUseCase.currentPage)
     }
 
     fun filterCharactersBy(name: String, status: String) {
@@ -62,12 +43,30 @@ class CharacterViewModel(
                 fetchCharacter(name = name, status = status)
                     .flowOn(Dispatchers.IO)
                     .catch {
-                        Log.e("Kawabunga", "Erro: ${it.message}")
+                        Log.e(DEBUG_TAG, "Erro: ${it.message}")
                     }
                     .collect { outcome ->
                         updateResultOnScreen(outcome) {
-                            _characterFilteredList.value = _characterFilteredList.value
-                                .copy(list = it.orEmpty())
+                            _characterFilteredList.value = _characterFilteredList
+                                .value + it
+
+                        }
+                    }
+            }
+        }
+    }
+
+    private fun getCharacterList(page: Int = charactersUseCase.currentPage) {
+        viewModelScope.launch {
+            with(charactersUseCase) {
+                fetchCharacterList(page)
+                    .flowOn(Dispatchers.IO)
+                    .catch {
+                        Log.e(DEBUG_TAG, "Erro: ${it.message}")
+                    }
+                    .collect { outcome ->
+                        updateResultOnScreen(outcome) {
+                            _characterList.value = _characterList.value + it
                         }
                     }
             }
@@ -75,11 +74,11 @@ class CharacterViewModel(
     }
 
     private fun updateResultOnScreen(
-        outcome: Outcome<CharacterList>,
-        onSuccess: (List<CharacterInfo>?) -> Unit
+        outcome: Outcome<List<CharacterInfo>>,
+        onSuccess: (List<CharacterInfo>) -> Unit
     ) {
         when (outcome) {
-            is Outcome.Success -> onSuccess(outcome.data?.list)
+            is Outcome.Success -> onSuccess(outcome.data ?: emptyList())
             is Outcome.Error -> {
                 Log.d(DEBUG_TAG, "Error: ${outcome.error?.message}")
             }
