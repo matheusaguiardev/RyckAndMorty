@@ -24,10 +24,7 @@ internal class CharacterDataSource(
                 }
             }
             val result = api.fetchCharactersList(page)
-
-            if(maxPage != null) {
-                maxPage = result.body()?.info?.pages
-            }
+            if(maxPage != null) maxPage = result.body()?.info?.pages
 
             emit(
                 if (result.isSuccessful) {

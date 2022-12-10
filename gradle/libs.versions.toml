@@ -5,7 +5,6 @@
         detekt_version = "1.20.0"
         application_version = "7.1.2"
 
-
     # Jetpack Compose
         compose = "1.3.1"
         compose_material3_version = "1.0.0-beta02"
@@ -13,6 +12,8 @@
         compose_activity_version = "1.4.0"
         compose_constraint_version = "1.0.0"
         compose_coil_version = "2.1.0"
+        compose_paging_version = "1.0.0-alpha17"
+
     # Navigation version
         navigation_version = "2.4.2"
     # Kotlin
@@ -35,8 +36,14 @@
         koin_version = "3.1.6"
         koin_version_unit_test = "3.2.0-beta-1"
 
+    # Snappy
+        snappydb_version = "0.5.2"
+        kryo_version = "2.24.0"
+
     # Unit Test
         mockk_version = "1.12.5"
+    # Unit Test
+        junit_version = "4.13.2"
 
 
 [libraries]
@@ -53,7 +60,7 @@
         compose_ui_manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
         compose_contraint = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "compose_constraint_version" }
         compose_coil = { module = "io.coil-kt:coil-compose", version.ref = "compose_coil_version" }
-
+        compose_paging = { module = "androidx.paging:paging-compose", version.ref = "compose_paging_version"}
     # LeakCanary
         leak-canary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary_version" }
 
@@ -86,6 +93,12 @@
     # Kotlin
         kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization_version"}
         kotlin-serialization-adapter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "serilization_adapter_version"}
+    # Snappy
+        snappydb = { module = "com.snappydb:snappydb-lib", version.ref = "snappydb_version" }
+        kryo = { module = "com.esotericsoftware.kryo:kryo", version.ref = "kryo_version"}
+    # Unit Test
+        junit = { module = "junit:junit", version.ref = "junit_version" }
+        koin-unit-test = { module = "io.insert-koin:koin-test", version.ref = "koin_version_unit_test" }
 
 [bundles]
     compose = [
@@ -96,7 +109,9 @@
         "compose.icons",
         "compose_activity",
         "compose_preview",
-        "compose_coil"
+        "compose_coil",
+        "compose_paging",
+        "navi-jetpack-compose"
     ]
 
     koin = [
@@ -115,6 +130,17 @@
     kotlin_serialization = [
         "kotlin_serialization",
         "kotlin-serialization-adapter"
+    ]
+
+    snappydb = [
+        "snappydb",
+        "kryo"
+    ]
+
+    unit_tests = [
+        "junit",
+        "koin-unit-test",
+        "mockk-unit"
     ]
 
 [plugins]

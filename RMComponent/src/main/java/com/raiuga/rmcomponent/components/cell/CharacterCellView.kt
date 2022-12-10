@@ -12,16 +12,19 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 @Composable
 fun CharacterCellView(
-    id: Int,
     imageUrl: String,
     name: String,
-    onClick: (Int) -> Unit
+    onClick: (String) -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -29,7 +32,7 @@ fun CharacterCellView(
             .padding(horizontal = 24.dp, vertical = 8.dp)
             .background(MaterialTheme.colors.background)
             .fillMaxWidth()
-            .clickable { onClick(id) }
+            .clickable { onClick(name) }
             .height(80.dp)
     ) {
         AsyncImage(
@@ -40,10 +43,18 @@ fun CharacterCellView(
             contentDescription = null
         )
 
+        val offset = Offset(5.0f, 10.0f)
         Text(
             modifier = Modifier.padding(horizontal = 24.dp),
             text = name,
-            color = MaterialTheme.colors.onBackground
+            color = MaterialTheme.colors.onBackground,
+            style = TextStyle(
+                fontSize = 24.sp,
+                shadow = Shadow(
+                    color = MaterialTheme.colors.secondaryVariant,
+                    offset = offset,
+                    blurRadius = 3f
+                ))
         )
     }
 }
@@ -53,5 +64,5 @@ fun CharacterCellView(
 fun CharacterCellPreview() {
     val previewImage = "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
     val previewName = "Rick"
-    CharacterCellView(0, previewImage, previewName) {}
+    CharacterCellView(previewImage, previewName) {}
 }

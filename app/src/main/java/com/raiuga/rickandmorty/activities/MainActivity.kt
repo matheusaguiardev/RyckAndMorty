@@ -6,12 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.raiuga.rickandmorty.constants.KeyScreens.CHARACTER_DETAIL_SCREEN
+import com.raiuga.rickandmorty.constants.KeyScreens.CHARACTER_SCREEN
+import com.raiuga.rickandmorty.screens.DetailCharacterScreen
 import com.raiuga.rickandmorty.screens.HomeScreen
 import com.raiuga.rickandmorty.ui.theme.RickAndMortyTheme
 import com.raiuga.rickandmorty.viewmodel.CharacterViewModel
@@ -36,8 +39,17 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting() {
+    val navController = rememberNavController()
     val viewModel = getViewModel<CharacterViewModel>()
-    HomeScreen(viewModel)
+    NavHost(navController = navController, startDestination = CHARACTER_SCREEN) {
+        composable(CHARACTER_SCREEN) { HomeScreen(navController, viewModel) }
+        composable(CHARACTER_DETAIL_SCREEN) {
+            DetailCharacterScreen(
+                viewModel = viewModel
+            )
+        }
+    }
+
 }
 
 @Preview(showBackground = true)
