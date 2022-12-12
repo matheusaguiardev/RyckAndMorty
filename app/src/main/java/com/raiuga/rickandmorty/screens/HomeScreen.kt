@@ -79,7 +79,8 @@ fun HomeScreen(
         if (showDialog) {
             Dialog(
                 properties = DialogProperties(usePlatformDefaultWidth = false),
-                onDismissRequest = { showDialog = false }) {
+                onDismissRequest = { showDialog = false }
+            ) {
                 SearchScreenView(
                     modifier = Modifier.testTag(FILTER_DIALOG_SCREEN),
                     titleScreen = stringResource(id = R.string.filter),

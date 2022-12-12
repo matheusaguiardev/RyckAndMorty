@@ -44,13 +44,15 @@ class CharacterViewModelTest {
         Dispatchers.resetMain()
     }
 
-    @Test fun `get first characters`() = runBlocking {
+    @Test
+    fun `get first characters`() = runBlocking {
         `given that request to get the character is success`()
         `when the screen starts`()
         `then the success result should be the list`()
     }
 
-    @Test fun `find a character by name`() = runBlocking {
+    @Test
+    fun `find a character by name`() = runBlocking {
         `given that request to get the character is success`()
         `given that request to filter a character is success`()
         `when user search for character by name`()
@@ -66,10 +68,12 @@ class CharacterViewModelTest {
     }
 
     private fun `given that request to filter a character is success`() {
-        coEvery { characterFilteredUseCase.fetchCharacter(
-            CharacterInfoMock.name,
-            CharacterInfoMock.status
-        ) } returns flow {
+        coEvery {
+            characterFilteredUseCase.fetchCharacter(
+                CharacterInfoMock.name,
+                CharacterInfoMock.status
+            )
+        } returns flow {
             emit(Outcome.Success(listOf(CharacterInfoMock)))
         }
     }
@@ -102,5 +106,4 @@ class CharacterViewModelTest {
             viewModel.characterList.first()
         )
     }
-
 }

@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 private const val DEBUG_TAG = "CharacterViewModel"
 
@@ -66,7 +65,7 @@ class CharacterViewModel(
     }
 
     fun findCharacterByName(name: String): CharacterInfo? {
-        return _characterList.value.firstOrNull{ it.name == name }
+        return _characterList.value.firstOrNull { it.name == name }
     }
 
     private fun getCharacterList(page: Int = charactersUseCase.currentPage) {
@@ -90,7 +89,7 @@ class CharacterViewModel(
     private fun addCharacters(list: List<CharacterInfo>) {
         val charListTemporary = _characterList.value.toMutableList()
         list.forEach { character ->
-            if(!charListTemporary.contains(character)) {
+            if (!charListTemporary.contains(character)) {
                 charListTemporary.add(character)
             }
         }
@@ -112,5 +111,4 @@ class CharacterViewModel(
             }
         }
     }
-
 }

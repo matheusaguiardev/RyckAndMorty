@@ -55,13 +55,15 @@ fun DetailCharacterScreen(
 }
 
 fun builderTexts(attribute: String, value: String) = buildAnnotatedString {
-    withStyle(style = SpanStyle(
-        fontWeight = FontWeight.Bold,
-        color = Color.Green)
+    withStyle(
+        style = SpanStyle(
+            fontWeight = FontWeight.Bold,
+            color = Color.Green
+        )
     ) {
         append(attribute)
     }
-    if(value.isNotEmpty()) {
+    if (value.isNotEmpty()) {
         append(value)
     } else {
         append("-")
