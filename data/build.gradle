@@ -41,7 +41,6 @@ dependencies {
     implementation project(':domain')
 
     implementation libs.bundles.koin
-    implementation libs.bundles.snappydb
     implementation libs.kotlin.serialization
     implementation libs.bundles.retrofit
 
