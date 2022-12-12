@@ -23,11 +23,13 @@ import com.raiuga.rmcomponent.constants.Paddings
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HeaderScreenView(
+    modifierView: Modifier = Modifier,
+    modifierButton: Modifier = Modifier,
     screenName: String,
     iconClick: (() -> Unit)? = null
 ) {
     CenterAlignedTopAppBar(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifierView.fillMaxWidth(),
         colors = TopAppBarDefaults
             .centerAlignedTopAppBarColors(containerColor = MaterialTheme.colors.background),
         title = {
@@ -40,7 +42,9 @@ fun HeaderScreenView(
         },
         actions = {
             iconClick?.let {
-                Column(Modifier.clickable { iconClick() }) {
+                Column(modifierButton
+                    .clickable { iconClick() }
+                ) {
                     IconButton(
                         modifier = Modifier.padding(end = Paddings.DP_X_SMALL_SPACE),
                         onClick = iconClick

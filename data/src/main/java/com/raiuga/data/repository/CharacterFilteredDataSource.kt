@@ -1,6 +1,5 @@
 package com.raiuga.data.repository
 
-import com.raiuga.data.mapper.toDomain
 import com.raiuga.data.remote.CharactersRemote
 import com.raiuga.domain.model.CharacterInfo
 import com.raiuga.domain.model.Outcome
@@ -11,7 +10,7 @@ import java.io.IOException
 
 private const val ERROR_MESSAGE = "Nenhum resultado encontrado pelo filtro"
 
-internal class CharacterFilteredDataSource(
+class CharacterFilteredDataSource(
     private val api: CharactersRemote
 ): CharacterFilteredUseCase() {
     override fun fetchCharacter(
@@ -22,7 +21,7 @@ internal class CharacterFilteredDataSource(
             val result = api.filterCharacters(name = name, status = status)
             emit(
                 if (result.isSuccessful) {
-                    Outcome.Success(result.body()?.toDomain())
+                    Outcome.Success(result.body()?.results)
                 } else {
                     Outcome.Error(IOException(ERROR_MESSAGE))
                 }

@@ -7,7 +7,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.core.logger.Level
 
-class RickNMortyApplication: Application() {
+class RickNMortyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -17,5 +17,4 @@ class RickNMortyApplication: Application() {
             modules(AppModules)
         }
     }
-
 }

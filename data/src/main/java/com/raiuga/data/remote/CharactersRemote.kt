@@ -1,12 +1,11 @@
 package com.raiuga.data.remote
 
-import com.raiuga.data.model.CharacterResponse
-import kotlinx.coroutines.flow.Flow
+import com.raiuga.domain.model.CharacterResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-internal interface CharactersRemote {
+interface CharactersRemote {
 
     @GET("character")
     suspend fun fetchCharactersList(

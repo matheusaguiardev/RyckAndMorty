@@ -1,5 +1,8 @@
 package com.raiuga.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CharacterInfo(
     val id: Int,
     val name: String,

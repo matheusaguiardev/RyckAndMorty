@@ -49,7 +49,6 @@ fun Greeting() {
             )
         }
     }
-
 }
 
 @Preview(showBackground = true)

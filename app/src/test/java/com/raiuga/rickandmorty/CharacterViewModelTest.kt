@@ -51,6 +51,7 @@ class CharacterViewModelTest {
     }
 
     @Test fun `find a character by name`() = runBlocking {
+        `given that request to get the character is success`()
         `given that request to filter a character is success`()
         `when user search for character by name`()
         `then the result should be the character expected`()
@@ -65,10 +66,6 @@ class CharacterViewModelTest {
     }
 
     private fun `given that request to filter a character is success`() {
-        coEvery { charactersUseCase.fetchCharacterList(0) } returns flow {
-            emit(Outcome.Success(listOf(CharacterInfoMock)))
-        }
-
         coEvery { characterFilteredUseCase.fetchCharacter(
             CharacterInfoMock.name,
             CharacterInfoMock.status

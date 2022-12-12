@@ -22,13 +22,14 @@ import coil.compose.AsyncImage
 
 @Composable
 fun CharacterCellView(
+    modifier: Modifier = Modifier,
     imageUrl: String,
     name: String,
     onClick: (String) -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .padding(horizontal = 24.dp, vertical = 8.dp)
             .background(MaterialTheme.colors.background)
             .fillMaxWidth()
@@ -64,5 +65,5 @@ fun CharacterCellView(
 fun CharacterCellPreview() {
     val previewImage = "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
     val previewName = "Rick"
-    CharacterCellView(previewImage, previewName) {}
+    CharacterCellView(imageUrl = previewImage, name = previewName) {}
 }

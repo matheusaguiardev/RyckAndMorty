@@ -1,6 +1,5 @@
 package com.raiuga.data.repository
 
-import com.raiuga.data.mapper.toDomain
 import com.raiuga.data.remote.CharactersRemote
 import com.raiuga.domain.model.CharacterInfo
 import com.raiuga.domain.model.Outcome
@@ -8,12 +7,11 @@ import com.raiuga.domain.repository.CharactersUseCase
 import java.io.IOException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlin.math.max
 
 private const val ERROR_MESSAGE = "Falha em buscar personagens na API"
 private const val ERROR_PAGE_MESSAGE = "Página não encontrada"
 
-internal class CharacterDataSource(
+class CharacterDataSource(
     private val api: CharactersRemote
 ) : CharactersUseCase() {
     override fun fetchCharacterList(page: Int): Flow<Outcome<List<CharacterInfo>>> {
@@ -28,7 +26,7 @@ internal class CharacterDataSource(
 
             emit(
                 if (result.isSuccessful) {
-                    Outcome.Success(result.body()?.toDomain())
+                    Outcome.Success(result.body()?.results)
                 } else {
                     Outcome.Error(IOException(ERROR_MESSAGE))
                 }
